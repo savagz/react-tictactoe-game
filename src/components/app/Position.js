@@ -9,7 +9,7 @@ export const Position = ({row, col}) => {
     const { playerTurn, selectPosition } = useContext(GameContext);
 
     const [select, setSelect] = useState(false);
-    const [sign, setSign] = useState('');
+    const [icon, setIcon] = useState('');
     const [divclass, setDivclass] = useState('board_item');
 
     const handleSelectItem = () => {
@@ -19,9 +19,9 @@ export const Position = ({row, col}) => {
             selectPosition(row, col);
 
             if(playerTurn === '1'){
-                setSign(faTimes);
+                setIcon(faTimes);
             } else {
-                setSign(faCircle);
+                setIcon(faCircle);
             }
         }
     }
@@ -47,7 +47,7 @@ export const Position = ({row, col}) => {
                 <div className="board_item_wrapper">
                     <div className="board_item_content">
                         {
-                            select && ( <FontAwesomeIcon className="player_icon" icon={ sign } /> )
+                            select && ( <FontAwesomeIcon className="player_icon" icon={ icon } /> )
                         }
                     </div>
                 </div>

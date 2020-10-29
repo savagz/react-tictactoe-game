@@ -4,7 +4,8 @@ export const GameContext = createContext();
 
 const GameProvider = (props) => {
     
-    const initialItems = [
+    // Board Positions
+    const items = [
         {id: "1", row:"1", col:"1"},
         {id: "2", row:"1", col:"2"},
         {id: "3", row:"1", col:"3"},
@@ -15,10 +16,15 @@ const GameProvider = (props) => {
         {id: "8", row:"3", col:"2"},
         {id: "9", row:"3", col:"3"}
     ];
+    
+    // Player Info
+    const player1 = { id:"1", name:"Player 1" };
+    const player2 = { id:"2", name:"Player 2" };
 
+    // Turn Active
     const [playerTurn, setPlayerTurn] = useState('1');
-    const [items, setItems] = useState(initialItems);
 
+    // Change Turn
     const selectPosition = (row, col) => {
         console.log(`Player ${playerTurn} : [${row} - ${col}]`);
         if(playerTurn === '1'){
@@ -32,9 +38,10 @@ const GameProvider = (props) => {
         <GameContext.Provider
             value={{
                 items,
+                player1,
+                player2,
                 playerTurn,
-                selectPosition,
-                setItems
+                selectPosition
             }}
         >
             { props.children }

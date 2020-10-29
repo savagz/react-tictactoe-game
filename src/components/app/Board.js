@@ -5,10 +5,7 @@ import { Position } from './Position'
 
 export const Board = () => {
 
-    const { items } = useContext(GameContext);
-
-    const player1 = { id:"1", name:"Player 1" };
-    const player2 = { id:"2", name:"Player 2" };
+    const { items, player1, player2 } = useContext(GameContext);
 
     return (
         <>

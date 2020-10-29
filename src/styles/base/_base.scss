@@ -10,11 +10,21 @@ h5 {
   padding: 0 20px;
 }
 
+.game_header {
+  background-color: #000000;
+  padding: 4px;
+  opacity: 0.8;
+}
+
+.title {
+  color: #ffffff;
+}
+
 .tic-tac-toe {
   font-family: "Open Sans", sans-serif;
   height: ($size-sm + $spacing * 2) * 3;
   overflow: hidden;
-  margin: 50px auto 30px auto;
+  margin: 50px auto 50px auto;
   position: relative;
   width: ($size-sm + $spacing * 2) * 3;
 
@@ -92,4 +102,12 @@ h5 {
   @media(min-width: 450px) {
     font-size: $size-sm*0.8;
   }
+}
+
+.player1_title {
+  color: $player-1-color;
+}
+
+.player2_title {
+  color: $player-2-color;
 }
