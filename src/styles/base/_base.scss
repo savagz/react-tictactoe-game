@@ -24,7 +24,7 @@ h5 {
   font-family: "Open Sans", sans-serif;
   height: ($size-sm + $spacing * 2) * 3;
   overflow: hidden;
-  margin: 50px auto 50px auto;
+  margin: 25px auto 25px auto;
   position: relative;
   width: ($size-sm + $spacing * 2) * 3;
 
@@ -50,7 +50,7 @@ h5 {
   position: relative;
   border-radius: 14px;
   cursor: pointer;
-  background-color: #78bec5;
+  background-color: $item-color;
   box-sizing: border-box;
   box-shadow: 0 2px 2px rgba(0, 90, 250, 0.05), 0 4px 4px rgba(0, 90, 250, 0.05), 0 8px 8px rgba(0, 90, 250, 0.05),
     0 16px 16px rgba(0, 90, 250, 0.05);
@@ -97,10 +97,10 @@ h5 {
 }
 
 .player_icon {
-  font-size: $size-sm*0.5;
-  
-  @media(min-width: 450px) {
-    font-size: $size-sm*0.8;
+  font-size: $size-sm * 0.5;
+
+  @media (min-width: 450px) {
+    font-size: $size-sm * 0.8;
   }
 }
 
@@ -110,4 +110,27 @@ h5 {
 
 .player2_title {
   color: $player-2-color;
+}
+
+.gamebutton {
+  display: inline-block;
+
+  color: $item-color;
+  background-color: transparent;
+  border: 1px solid $item-color;
+  border-radius: 100px;
+
+  padding: 0.3em 1.2em;
+  margin: 5px;
+
+  background-size: 200% 100%;
+  background-image: linear-gradient(to right, transparent 50%, $item-color 50%);
+  transition: background-position 0.3s cubic-bezier(0.19, 1, 0.22, 1) 0.1s, color 0.5s ease 0s,
+    background-color 0.5s ease;
+
+  &:hover {
+    color: rgba(255, 255, 255, 1);
+    background-color: $item-color;
+    background-position: -100% 100%;
+  }
 }

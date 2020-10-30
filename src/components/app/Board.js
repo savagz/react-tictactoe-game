@@ -7,31 +7,34 @@ import { Position } from './Position'
 
 export const Board = () => {
 
-    const { items, winner, player1, player2, playerTurn, resetGame, startGame } = useContext(GameContext);
-    
-    useEffect(() => {
-        if(winner){
-            Swal.fire({
-                title: 'Winner !',
-                text: winner,
-                icon: 'success'
-            }).then((result) => {
-                resetGame();
-            });
-        }
-    }, [winner, resetGame]);
+    const { items, gameStatus, player1, player2, playerTurn, resetGame, cleanMoves } = useContext(GameContext);
+    const { winner, state } = gameStatus;
 
     useEffect(() => {
-        if(!playerTurn){
+        if(winner && state !== "STOP"){
             Swal.fire({
-                title: 'New Game',
-                text: 'Click to Start',
-                icon: 'info'
+                title: 'Winner !',
+                text: `${winner} Rocks !`,
+                icon: 'success'
             }).then((result) => {
-                startGame();
+                cleanMoves();
             });
+        } else {
+            if(state !== "STOP" && items.filter(item => item.played !== "").length === 9){
+                Swal.fire({
+                    title: 'Its a Tie !',
+                    text: 'Try again...',
+                    icon: 'error'
+                }).then((result) => {
+                    cleanMoves();
+                });
+            }
         }
-    }, [playerTurn, startGame]);
+    }, [items, winner, state, cleanMoves]);
+
+    const handleStartButton = () => {
+        resetGame();
+    }
 
     return (
         <>
@@ -55,6 +58,10 @@ export const Board = () => {
             <Player 
                 { ...player2 }
             />
+
+            {
+                !playerTurn && <button className="gamebutton" onClick={ handleStartButton }>Start</button>
+            }
         </>
     )
 }

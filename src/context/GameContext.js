@@ -1,16 +1,13 @@
 import React, { createContext, useState } from 'react'
-import { getItems, getPlayers } from '../helpers/data';
+import { getGameStatus, getItems, getPlayers } from '../helpers/data';
 import { checkGameStatus } from '../helpers/game';
 
 export const GameContext = createContext();
 
 const GameProvider = (props) => {
     
-    // Winner
-    const [winner, setWinner] = useState(null);
-    
-    // Reset Game
-    const [reset, setReset] = useState(false);
+    // Game Status
+    const [gameStatus, setGameStatus] = useState(getGameStatus());
 
     // Players
     const [players, setPlayers] = useState(getPlayers());
@@ -22,10 +19,9 @@ const GameProvider = (props) => {
     const [playerTurn, setPlayerTurn] = useState(null);
 
     // Change Turn & Check Positions
-    const selectPosition = (id, row, col) => {
-        //console.log(`Player ${playerTurn.id} : [${row} - ${col}]`);
-        if(reset){
-            setReset(false);
+    const selectPosition = (id) => {
+        if(gameStatus.reset){
+            setGameStatus({ ...gameStatus, reset:false });
         }
 
         let mvs = playerTurn.moves;
@@ -46,7 +42,7 @@ const GameProvider = (props) => {
         ));
         
         if(checkGameStatus(id, playerTurn.moves)){
-            setWinner(playerTurn.name);
+            setGameStatus({ ...gameStatus, winner:playerTurn.name });
         } else {
             if(playerTurn.id === '1'){
                 setPlayerTurn(players[1]);
@@ -56,30 +52,35 @@ const GameProvider = (props) => {
         }
     }
 
+    // Restart Game
     const resetGame = () => {
-        setWinner(null);
-        setReset(true);
+        setGameStatus({ ...gameStatus, reset:true, winner:null });
         setPlayers(getPlayers());
         setItems(getItems());
         setPlayerTurn(null);
+        
+        setGameStatus({ ...gameStatus, reset:true, state:"PLAYING" });
+        setPlayerTurn(players[0]);
     }
 
-    const startGame = () => {
-        setPlayerTurn(players[0]);
+    // Clean Player Moves
+    const cleanMoves = () => {
+        setGameStatus({ ...gameStatus, winner:null, state:"STOP" });
+        setPlayerTurn(null);
+        setPlayers(getPlayers());
     }
 
     return(
         <GameContext.Provider
             value={{
                 items,
-                winner,
-                reset,
+                gameStatus,
                 player1:players[0],
                 player2:players[1],
                 playerTurn,
                 selectPosition,
                 resetGame,
-                startGame
+                cleanMoves
             }}
         >
             { props.children }
