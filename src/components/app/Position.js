@@ -1,24 +1,36 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { GameContext } from '../../context/GameContext';
 
-export const Position = ({row, col}) => {
+export const Position = ({id, row, col}) => {
 
-    const { playerTurn, selectPosition } = useContext(GameContext);
-
+    const { playerTurn, reset, selectPosition } = useContext(GameContext);
+    
     const [select, setSelect] = useState(false);
     const [icon, setIcon] = useState('');
     const [divclass, setDivclass] = useState('board_item');
 
+    useEffect(() => {
+        if(reset){
+            resetPosition();
+        }
+    }, [reset]);
+
+    const resetPosition = () => {
+        setSelect(false);
+        setDivclass(`board_item`);
+        setIcon(''); 
+    }
+
     const handleSelectItem = () => {
         if(!select){
             setSelect(true);
-            setDivclass(`board_item item_selected_player${playerTurn}`);
-            selectPosition(row, col);
+            setDivclass(`board_item item_selected_player${playerTurn.id}`);
+            selectPosition(id, row, col);
 
-            if(playerTurn === '1'){
+            if(playerTurn.id === '1'){
                 setIcon(faTimes);
             } else {
                 setIcon(faCircle);

@@ -8,7 +8,7 @@ export const Player = ({id, name}) => {
     return (
         <div>
             { 
-                (playerTurn === id)
+                (playerTurn && playerTurn.id === id)
                 ? <h1 className={ `player${id}_title animate__animated animate__zoomIn` } >{ name }</h1>
                 : <h1 className="animate__animated animate__zoomIn">{ name }</h1> 
             }
